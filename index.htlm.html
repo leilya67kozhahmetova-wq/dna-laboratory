@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лабораторный опыт № 6 — Изготовление модели ДНК</title>
+<style>
+:root{--ink:#193c2a;--muted:#53695c;--green:#22764c;--green2:#369568;--edge:#cbe3d1;--paper:#fff;--mint:#e8f8ed;--soft:#f5fcf6;--ok:#1e8250;--danger:#a62f50;--sugar:#f8da71;--phosphate:#9ac1e8;--A:#ef9bb0;--T:#f8bd78;--G:#b0a3ed;--C:#8fd6b4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(145deg,#edfbef,#f5fcf7 45%,#e4f7ec);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.48}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.42;cursor:not-allowed;transform:none!important}.hero{background:linear-gradient(105deg,#b9ebc6,#ddf9df 55%,#f1fff2);border-bottom:2px solid #c5e5c9;padding:28px max(20px,calc((100vw - 1320px)/2));box-shadow:0 6px 22px #256b4720}.hero-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:#ffffffb9;border:1px solid #b4dabe;border-radius:100px;font-size:14px;font-weight:800;letter-spacing:.04em;color:#2c6742}.hero h1{font-size:clamp(29px,3.3vw,47px);line-height:1.13;margin:14px 0 12px;letter-spacing:-.035em}.hero p{max-width:990px;margin:0;color:#315741;font-size:17px}.app{max-width:1360px;padding:22px 20px 58px;margin:auto}.section-title{font-size:23px;font-weight:850;margin:0 0 12px}.layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:18px}.panel{background:#fff;border:1px solid var(--edge);border-radius:22px;box-shadow:0 8px 25px #2c78501a;padding:21px}.side{align-self:start}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.tag{display:inline-block;padding:6px 12px;border-radius:999px;background:#d9f1e0;color:#226a43;font-weight:750;font-size:14px}.progress-track{height:14px;background:#e8f2e9;border-radius:30px;overflow:hidden;margin:12px 0}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#72c991,#268755);border-radius:30px;transition:width .45s}.step{padding:12px 13px;margin:10px 0;background:#f4fbf6;border:1px solid #d9ebdc;border-radius:13px;display:flex;gap:11px;align-items:flex-start}.step .num{flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#ccefd5;font-weight:850}.step.active{border-color:#52b57d;background:#e8f8ec}.step.done .num{background:#2c8755;color:#fff}.step strong{font-size:15px}.step p{margin:2px 0 0;font-size:14px;color:var(--muted)}.button{border:0;border-radius:13px;min-height:48px;padding:11px 16px;background:#298553;color:#fff;font-weight:800;box-shadow:0 4px 12px #20704425;transition:transform .15s,filter .15s}.button:hover:not(:disabled){transform:translateY(-2px);filter:brightness(.98)}.button.alt{background:#e1f2e5;color:#24613e;box-shadow:none;border:1px solid #b9dec5}.button.ghost{background:#fff;color:#296343;box-shadow:none;border:1px solid #bfdac6}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 6px}.actions .button{flex:1 1 135px}.inventory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.item{border:1px solid var(--edge);border-radius:12px;background:#f9fdfa;padding:10px 10px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}.dot{width:17px;height:17px;display:inline-block;border-radius:50%;border:1px solid #0001;flex:none}.note{font-size:14px;color:#587060;margin:9px 0 0}.stage-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}.scene{background:radial-gradient(circle at 50% 20%,#fff,#edfaf1 72%);border:1px solid #d6eddb;border-radius:19px;min-height:492px;overflow:hidden;margin-top:12px;position:relative}.scene svg{display:block;width:100%;height:min(530px,60vw);min-height:435px;max-height:570px}.scene .watermark{position:absolute;left:15px;bottom:10px;font-size:13px;color:#71927c}.message{padding:15px 16px;min-height:59px;background:#e7f6e8;border:1px solid #c8e3ce;border-radius:14px;margin-top:12px;font-size:16px;font-weight:650}.message.error{background:#fff0f0;border-color:#e9bac5;color:#992e4a}.message.success{background:#e3f7e8;border-color:#93cba8;color:#165d38}.base-select{border:1px solid #c7e5d0;background:#f5fcf6;border-radius:18px;padding:17px;margin-top:13px}.base-select h3{font-size:19px;margin:0 0 7px}.choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:11px}.choice{min-height:72px;display:flex;gap:7px;align-items:center;justify-content:center;flex-direction:column;color:#233c2d;background:#fff;border:2px solid #cfdfd2;border-radius:14px;font-weight:850;transition:.15s}.choice:hover:not(:disabled){border-color:#6dbb84;transform:translateY(-2px)}.choice .letter{font-size:22px}.choice .name{font-size:12px;font-weight:600}.choice[data-base="A"] .letter{color:#b6496d}.choice[data-base="T"] .letter{color:#b97618}.choice[data-base="G"] .letter{color:#7058b9}.choice[data-base="C"] .letter{color:#21875d}.feedback{margin-top:8px;font-size:15px;font-weight:750;min-height:23px}.facts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.facts h2,.questions h2{margin:0 0 8px;font-size:24px}.facts p{margin:8px 0}.obstable{border-collapse:collapse;width:100%;font-size:14px;margin-top:12px}.obstable th,.obstable td{padding:10px 9px;border:1px solid #d2e5d8;text-align:left;vertical-align:top}.obstable th{background:#e7f6e9}.obstable td{background:#fff}.answer-content{margin-top:14px;padding:16px;background:#edf9f0;border:1px solid #cfead6;border-radius:14px}.answer-content[hidden]{display:none}.answer-content p{margin:9px 0}.question{background:#f7fcf8;border:1px solid #d6eadb;border-radius:14px;padding:15px 17px;margin:13px 0}.question>strong{display:block;margin-bottom:9px}.option{display:block;padding:7px 10px;cursor:pointer;margin:4px 0;border-radius:10px}.option:hover{background:#eaf5ee}.option input{accent-color:#2f8a58;transform:scale(1.2);margin-right:9px}.result{margin-top:13px;padding:13px;background:#eaf8ec;border:1px solid #cee6d4;border-radius:13px;font-weight:750}.mini{font-size:14px;color:var(--muted)}.footer{margin-top:18px;text-align:center;color:#657d6b;font-size:13px}.line-draw{animation:fadein .65s both}@keyframes fadein{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}@media(max-width:1020px){.layout{grid-template-columns:1fr}.facts-grid{grid-template-columns:1fr}.scene svg{height:450px}}@media(max-width:600px){.app{padding:14px 10px 35px}.panel{padding:15px;border-radius:16px}.choices{grid-template-columns:repeat(2,1fr)}.hero{padding:20px 14px}.scene{min-height:400px}.scene svg{min-height:380px;height:380px}}
+@media print{header{background:white}body{background:white}.layout{display:block}.side{page-break-after:always}.button,.choices{display:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+ <div class="hero-top"><span class="eyebrow">🧬 ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ</span><span class="eyebrow">Интерактивная 3D-имитация</span></div>
+ <h1>Лабораторный опыт № 6<br>Изготовление модели ДНК</h1>
+ <p>Соберите сахарофосфатный каркас, установите восемь правильных пар оснований и превратите модель в анимированную двойную спираль. В конце — вопросы, проверка и ответы.</p>
+</header>
+<main class="app">
+ <section class="layout">
+  <aside class="panel side">
+   <h2 class="section-title">Этапы эксперимента</h2>
+   <div class="topline"><span id="progressLabel" class="tag">0 из 8 пар</span><span class="mini" id="pointsLabel">Ошибок: 0</span></div>
+   <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+   <div id="steps">
+    <div class="step active" data-step="0"><span class="num">1</span><div><strong>Соберите каркас</strong><p>16 шариков сахара + 14 фосфатных групп</p></div></div>
+    <div class="step" data-step="1"><span class="num">2</span><div><strong>Подберите пары</strong><p>Для каждого основания выберите комплементарное</p></div></div>
+    <div class="step" data-step="2"><span class="num">3</span><div><strong>Скрутите спираль</strong><p>Посмотрите пространственную структуру ДНК</p></div></div>
+   </div>
+   <div class="actions">
+    <button class="button" id="buildBtn">1. Создать каркас</button>
+    <button class="button" id="twistBtn" disabled>3. Скрутить ДНК</button>
+    <button class="button ghost" id="resetBtn">↻ Начать заново</button>
+   </div>
+   <h3 style="margin:23px 0 8px;font-size:18px">Материалы модели</h3>
+   <div class="inventory">
+    <div class="item"><span class="dot" style="background:var(--sugar)"></span>Сахар: 16</div>
+    <div class="item"><span class="dot" style="background:var(--phosphate)"></span>Фосфат: 14</div>
+    <div class="item"><span class="dot" style="background:var(--A)"></span>A — аденин</div>
+    <div class="item"><span class="dot" style="background:var(--T)"></span>T — тимин</div>
+    <div class="item"><span class="dot" style="background:var(--G)"></span>G — гуанин</div>
+    <div class="item"><span class="dot" style="background:var(--C)"></span>C — цитозин</div>
+   </div>
+   <p class="note">В модели: две цепи, 8 пар оснований, 16 остатков сахара и 14 фосфатных групп. Цвета выбраны условно. S — сахар, P — фосфат.</p>
+  </aside>
+
+  <div class="panel">
+   <div class="stage-head"><h2 class="section-title" style="margin:0">Сборочный стол</h2><span class="tag" id="phaseBadge">Подготовка</span></div>
+   <div class="scene" aria-label="Анимированная модель ДНК">
+    <svg id="dnaSvg" viewBox="0 0 860 555" role="img" aria-label="Модель ДНК из сахаров, фосфатных групп и азотистых оснований">
+      <text x="430" y="251" text-anchor="middle" fill="#5a886b" font-size="29" font-weight="800">🧬</text>
+      <text x="430" y="293" text-anchor="middle" fill="#446d52" font-size="23">Начните с создания каркаса ДНК</text>
+    </svg>
+    <span class="watermark">Модель условная: размеры и расстояния не в масштабе</span>
+   </div>
+   <div id="message" class="message" role="status">Нажмите кнопку «1. Создать каркас». На экране появятся две цепи из сахара и фосфатных групп.</div>
+   <div class="base-select" id="pairArea" hidden>
+    <h3 id="taskTitle">Какая пара будет правильной?</h3>
+    <p id="taskHint" class="mini" style="margin:0">Выберите основание для правой цепи.</p>
+    <div class="choices" id="baseChoices">
+     <button class="choice" data-base="A"><span class="letter">A</span><span class="name">Аденин</span></button>
+     <button class="choice" data-base="T"><span class="letter">T</span><span class="name">Тимин</span></button>
+     <button class="choice" data-base="G"><span class="letter">G</span><span class="name">Гуанин</span></button>
+     <button class="choice" data-base="C"><span class="letter">C</span><span class="name">Цитозин</span></button>
+    </div>
+    <div class="feedback" id="pairFeedback" aria-live="polite"></div>
+    <button class="button alt" id="hintBtn" style="margin-top:8px">Подсказка: правило комплементарности</button>
+    <div class="mini" id="hintText" hidden style="margin-top:7px">Аденин соединяется с тимином (A–T), гуанин — с цитозином (G–C). Между A–T образуются две, между G–C — три водородные связи.</div>
+   </div>
+  </div>
+ </section>
+
+ <section class="facts-grid">
+  <div class="panel facts">
+   <h2>Ход работы и наблюдения</h2>
+   <p>Цель: изготовить модель ДНК и объяснить строение двойной спирали и правило комплементарности.</p>
+   <table class="obstable">
+    <thead><tr><th>Этап</th><th>Наблюдение</th><th>Вывод</th></tr></thead>
+    <tbody id="obsBody">
+     <tr><td>Каркас</td><td id="obs1">Не выполнен</td><td>Чередование сахара и фосфата</td></tr>
+     <tr><td>Основания</td><td id="obs2">Не выполнен</td><td>Комплементарные пары A–T и G–C</td></tr>
+     <tr><td>Двойная спираль</td><td id="obs3">Не выполнен</td><td>Две спирально закрученные цепи</td></tr>
+    </tbody>
+   </table>
+   <div class="actions"><button class="button alt" id="printBtn">⎙ Распечатать результаты</button></div>
+  </div>
+  <div class="panel facts">
+   <h2>Вопросы и правильные ответы</h2>
+   <p><strong>1.</strong> Как называются две внешние части модели ДНК?</p>
+   <p><strong>2.</strong> Почему аденин соединяется именно с тимином?</p>
+   <p><strong>3.</strong> Что произойдёт, если вместо правильной пары A–T поставить A–C?</p>
+   <p><strong>4.</strong> Как устроена готовая модель ДНК?</p>
+   <button class="button alt" id="answersBtn" aria-expanded="false">Показать ответы и итоговый вывод</button>
+   <div class="answer-content" id="answersBlock" hidden>
+    <p><strong>1.</strong> Сахарофосфатные каркасы двух цепей ДНК.</p>
+    <p><strong>2.</strong> Потому что действует принцип комплементарности: A сочетается с T; между ними образуются две водородные связи.</p>
+    <p><strong>3.</strong> Такая пара не соответствует обычному правилу комплементарности для ДНК.</p>
+    <p><strong>4.</strong> ДНК состоит из двух противоположно направленных цепей, закрученных в двойную спираль. Основания направлены внутрь, а сахарофосфатные каркасы — наружу.</p>
+    <p><strong>Вывод:</strong> Молекула ДНК представляет собой двойную спираль из двух полинуклеотидных цепей. В каждой цепи чередуются остатки дезоксирибозы и фосфатных групп, а пары A–T и G–C соединяют цепи водородными связями.</p>
+   </div>
+  </div>
+ </section>
+
+ <section class="panel questions" style="margin-top:18px">
+  <div class="topline"><h2>Проверьте знания</h2><span class="tag">5 вопросов · по 1 баллу</span></div>
+  <p class="mini">Выберите один из пяти вариантов ответа для каждого вопроса. После проверки можно раскрыть правильные ответы.</p>
+  <div id="quiz"></div>
+  <div class="actions">
+   <button class="button" id="checkBtn">Проверить ответы</button>
+   <button class="button alt" id="keysBtn">Показать правильные ответы</button>
+   <button class="button ghost" id="clearBtn">Очистить ответы</button>
+  </div>
+  <div class="result" id="quizResult" role="status">Результат появится после проверки.</div>
+  <div class="answer-content" id="quizKeys" hidden></div>
+ </section>
+ 
+ <section class="panel questions" style="margin-top:18px" id="submissionPanel">
+  <h2>Отправка результатов учителю</h2>
+  <p>Заполните данные и отправьте выполненную работу. Результаты автоматически поступят учителю в Google Таблицу.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0">
+   <label><strong>Фамилия и имя</strong><input id="studentName" type="text" autocomplete="name" placeholder="Введите фамилию и имя" required style="display:block;width:100%;padding:12px;border:1px solid #bfdac6;border-radius:10px;margin-top:6px"></label>
+   <label><strong>Класс</strong><input id="studentClass" type="text" placeholder="Например, 11 А" required style="display:block;width:100%;padding:12px;border:1px solid #bfdac6;border-radius:10px;margin-top:6px"></label>
+  </div>
+  <div class="actions"><button class="button" id="submitResultsBtn" type="button">Отправить результаты учителю</button></div>
+  <div class="result" id="submitStatus" role="status">Перед отправкой завершите сборку модели, ответьте на 5 вопросов и укажите фамилию, имя и класс.</div>
+ </section>
+
+ <!-- Отправка результатов выполняется через Google Apps Script. -->
+
+ <p class="footer">Виртуальная образовательная модель. Не требует химических реактивов. Для отправки результатов необходимо подключение к интернету.</p>
+</main>
+<script>
+(()=>{'use strict';
+const svg=document.getElementById('dnaSvg');
+const seq=['A','G','T','C','A','G','C','T'];
+const complement={A:'T',T:'A',G:'C',C:'G'};
+const names={A:'аденин',T:'тимин',G:'гуанин',C:'цитозин'};
+const colors={A:'#ef9bb0',T:'#f8bd78',G:'#b0a3ed',C:'#8fd6b4'};
+let phase='idle',count=0,errors=0,frame=null;
+const by=id=>document.getElementById(id);
+function setMessage(msg,type=''){const e=by('message');e.className='message'+(type?' '+type:'');e.textContent=msg;}
+function htmlescape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function shape(x,y,label,fill,r=20){return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="#487259" stroke-width="1.4"/><text x="${x}" y="${y+6}" font-size="${r<18?13:17}" fill="#243a2b" font-weight="850" text-anchor="middle">${label}</text>`;}
+function baseBox(x,y,letter,delay=0){return `<g class="line-draw" style="animation-delay:${delay}ms"><rect x="${x-31}" y="${y-18}" rx="11" ry="11" width="62" height="36" fill="${colors[letter]}" stroke="#496e58" stroke-width="1.5"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="20" font-weight="850" fill="#223b2b">${letter}</text></g>`;}
+function ladder(){
+ let s=`<defs><pattern id="dots" width="31" height="31" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#caead2"/></pattern></defs><rect width="860" height="555" fill="url(#dots)"/><text x="265" y="31" text-anchor="middle" font-size="18" font-weight="800" fill="#3e7553">Цепь 1</text><text x="595" y="31" text-anchor="middle" font-size="18" font-weight="800" fill="#3e7553">Цепь 2</text>`;
+ // Horizontal positions: sugars 265 and 595; phosphate centers alternate vertically between sugars.
+ for(let i=0;i<8;i++){
+  const y=65+i*60;
+  if(i<7){const mid=y+30; s+=`<line x1="265" y1="${y}" x2="265" y2="${y+60}" stroke="#91c4a0" stroke-width="10" stroke-linecap="round"/><line x1="595" y1="${y}" x2="595" y2="${y+60}" stroke="#91c4a0" stroke-width="10" stroke-linecap="round"/>${shape(265,mid,'P','#9ac1e8',14)}${shape(595,mid,'P','#9ac1e8',14)}`;}
+  s+=shape(265,y,'S','#f8da71',20)+shape(595,y,'S','#f8da71',20);
+  if(i<count){
+   const left=seq[i],right=complement[left];
+   s+=`<line x1="285" y1="${y}" x2="356" y2="${y}" stroke="#91c4a0" stroke-width="5"/><line x1="504" y1="${y}" x2="575" y2="${y}" stroke="#91c4a0" stroke-width="5"/>`;
+   s+=baseBox(387,y,left,0)+baseBox(473,y,right,0);
+   const bonds=left==='A'||left==='T'?2:3;
+   for(let j=0;j<bonds;j++){const off=(j-(bonds-1)/2)*7;s+=`<line x1="419" y1="${y+off}" x2="441" y2="${y+off}" stroke="#347c54" stroke-width="2.5" stroke-dasharray="4 3"/>`;}
+  } else if (i===count){
+   s+=`<rect x="354" y="${y-20}" width="65" height="40" rx="11" fill="${colors[seq[i]]}" stroke="#477555" stroke-width="1.5"/><text x="387" y="${y+7}" text-anchor="middle" font-size="20" font-weight="850" fill="#243b2b">${seq[i]}</text><rect x="441" y="${y-20}" width="65" height="40" rx="11" fill="#fff" stroke="#45996a" stroke-width="2" stroke-dasharray="5 4"/><text x="473" y="${y+7}" text-anchor="middle" font-size="23" font-weight="800" fill="#45996a">?</text>`;
+  }
+ }
+ s+=`<text x="430" y="539" text-anchor="middle" font-size="15" fill="#587b65">S — дезоксирибоза · P — фосфатная группа · пунктир — водородные связи</text>`;
+ svg.innerHTML=s;
+}
+function helixSvg(time){
+ const t=time/1050;
+ let s=`<defs><pattern id="bgdot" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#cee9d5"/></pattern></defs><rect width="860" height="555" fill="url(#bgdot)"/><text x="430" y="32" text-anchor="middle" font-size="21" font-weight="850" fill="#397450">Двойная спираль ДНК</text>`;
+ const ptsL=[],ptsR=[];
+ for(let i=0;i<8;i++){
+   const y=72+i*60, theta=i*0.85+t;
+   const dx=135*Math.cos(theta);
+   const xl=430-dx, xr=430+dx;
+   ptsL.push([xl,y]);ptsR.push([xr,y]);
+   const left=seq[i],right=complement[left];
+   const depth=Math.sin(theta);
+   const radiusL=15+6*(.5+.5*depth),radiusR=15+6*(.5-.5*depth);
+   s+=`<line x1="${xl}" y1="${y}" x2="${xr}" y2="${y}" stroke="${depth>0?'#5dac78':'#8dc59d'}" stroke-width="${depth>0?9:5}" stroke-linecap="round" opacity=".88"/>`;
+   const bonds=left==='A'||left==='T'?2:3;
+   for(let j=0;j<bonds;j++){const o=(j-(bonds-1)/2)*6;s+=`<line x1="${Math.min(xl,xr)+27}" y1="${y+o}" x2="${Math.max(xl,xr)-27}" y2="${y+o}" stroke="#2b7851" stroke-width="1.6" stroke-dasharray="5 5"/>`;}
+   s+=`<circle cx="${xl}" cy="${y}" r="${radiusL+5}" fill="#f8da71" stroke="#729d70" stroke-width="2"/><circle cx="${xr}" cy="${y}" r="${radiusR+5}" fill="#f8da71" stroke="#729d70" stroke-width="2"/>`;
+   s+=`<circle cx="${xl}" cy="${y}" r="${radiusL}" fill="${colors[left]}" stroke="#5e866b" stroke-width="1.5"/><circle cx="${xr}" cy="${y}" r="${radiusR}" fill="${colors[right]}" stroke="#5e866b" stroke-width="1.5"/>`;
+   s+=`<text x="${xl}" y="${y+5}" text-anchor="middle" font-size="15" font-weight="850" fill="#193a2b">${left}</text><text x="${xr}" y="${y+5}" text-anchor="middle" font-size="15" font-weight="850" fill="#193a2b">${right}</text>`;
+ }
+ function smooth(points){return points.map((v,i)=>`${i?'L':'M'}${v[0]},${v[1]}`).join(' ')}
+ s+=`<path d="${smooth(ptsL)}" fill="none" stroke="#2b955b" stroke-width="6" stroke-linecap="round" opacity=".63"/><path d="${smooth(ptsR)}" fill="none" stroke="#72b58e" stroke-width="6" stroke-linecap="round" opacity=".63"/>`;
+ s+=`<text x="430" y="540" text-anchor="middle" font-size="15" fill="#587b65">Анимированная упрощённая модель пространственной структуры ДНК</text>`;
+ svg.innerHTML=s;
+}
+function tick(t){if(phase!=='helix')return;helixSvg(t);frame=requestAnimationFrame(tick);}
+function refreshSteps(){document.querySelectorAll('.step').forEach((el,i)=>{
+ const n=phase==='idle'?0:phase==='pairs'?1:2;
+ el.classList.toggle('active',i===n);el.classList.toggle('done',i<n || phase==='helix' && i===2);
+ });}
+function refreshProgress(){by('progressLabel').textContent=count+' из 8 пар';by('progressBar').style.width=(count/8*100)+'%';by('pointsLabel').textContent='Ошибок: '+errors;}
+function renderTask(){if(phase!=='pairs')return;
+ if(count<8){by('taskTitle').textContent=`Пара ${count+1} из 8: с чем соединяется ${seq[count]} (${names[seq[count]]})?`;by('taskHint').textContent='Нажмите правильное основание для второй цепи.';by('pairArea').hidden=false;}
+ else{by('pairArea').hidden=true;by('twistBtn').disabled=false;by('phaseBadge').textContent='Все пары собраны';setMessage('Прекрасно! Все 8 комплементарных пар собраны. Нажмите «3. Скрутить ДНК», чтобы увидеть двойную спираль.','success');}
+}
+function build(){if(phase!=='idle')return;phase='pairs';count=0;errors=0;by('buildBtn').disabled=true;by('phaseBadge').textContent='Сборка пар';by('obs1').textContent='Собраны 2 цепи: 16 остатков сахара и 14 фосфатных групп';by('obs2').textContent='0 из 8 пар';setMessage('Каркасы готовы! В каждой цепи чередуются 8 остатков сахара и 7 фосфатных групп. Теперь соедините основания по правилу комплементарности.','success');refreshSteps();refreshProgress();ladder();renderTask();}
+function choose(base){if(phase!=='pairs'||count>=8)return;const needed=complement[seq[count]];if(base!==needed){errors++;by('pairFeedback').textContent=`✖ Основание ${base} не подходит к ${seq[count]}. Попробуйте снова.`;by('pairFeedback').style.color='#a62f50';setMessage('Неверная пара. В молекуле ДНК аденин сочетается с тимином, а гуанин — с цитозином.','error');}
+ else{count++;by('pairFeedback').textContent=`✔ Правильно: ${seq[count-1]}–${base}!`;by('pairFeedback').style.color='#1e8250';by('obs2').textContent=`Собрано ${count} из 8 пар A–T / G–C`;setMessage(count===8?'Все пары собраны!':'Правильно! Связь образована. Продолжайте собирать следующую пару.','success');ladder();renderTask();}
+ refreshProgress();}
+function twist(){if(phase!=='pairs'||count!==8)return;phase='helix';by('twistBtn').disabled=true;by('phaseBadge').textContent='Двойная спираль';by('pairArea').hidden=true;by('obs3').textContent='Две комплементарные цепи закручены вокруг общей оси';refreshSteps();setMessage('Модель ДНК собрана! Обратите внимание: основания находятся внутри двойной спирали, а сахарофосфатные каркасы образуют её внешние стороны.','success');if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(tick);}
+function reset(){if(frame)cancelAnimationFrame(frame);frame=null;phase='idle';count=0;errors=0;by('buildBtn').disabled=false;by('twistBtn').disabled=true;by('pairArea').hidden=true;by('hintText').hidden=true;by('pairFeedback').textContent='';by('phaseBadge').textContent='Подготовка';by('obs1').textContent='Не выполнен';by('obs2').textContent='Не выполнен';by('obs3').textContent='Не выполнен';svg.innerHTML='<text x="430" y="235" text-anchor="middle" font-size="68">🧬</text><text x="430" y="295" text-anchor="middle" fill="#446d52" font-size="23" font-weight="800">Начните с создания каркаса ДНК</text><text x="430" y="335" text-anchor="middle" fill="#689075" font-size="17">Две цепи · 8 пар оснований</text>';setMessage('Нажмите кнопку «1. Создать каркас». На экране появятся две цепи из сахара и фосфатных групп.');refreshSteps();refreshProgress();}
+by('buildBtn').addEventListener('click',build);by('twistBtn').addEventListener('click',twist);by('resetBtn').addEventListener('click',reset);
+by('baseChoices').addEventListener('click',e=>{const b=e.target.closest('[data-base]');if(b)choose(b.dataset.base);});
+by('hintBtn').addEventListener('click',()=>{by('hintText').hidden=!by('hintText').hidden;});
+by('answersBtn').addEventListener('click',()=>{const panel=by('answersBlock');panel.hidden=!panel.hidden;by('answersBtn').setAttribute('aria-expanded',String(!panel.hidden));by('answersBtn').textContent=panel.hidden?'Показать ответы и итоговый вывод':'Скрыть правильные ответы';});
+by('printBtn').addEventListener('click',()=>window.print());
+const data=[
+ {q:'Из чего состоит сахарофосфатный каркас ДНК?',a:['Из белков и жиров','Из дезоксирибозы и фосфатных групп','Из тимина и гуанина','Из аминокислот','Из воды и кислорода'],k:1},
+ {q:'Какое основание комплементарно аденину в ДНК?',a:['Цитозин','Урацил','Гуанин','Тимин','Аденин'],k:3},
+ {q:'Сколько водородных связей обычно образуется между G и C?',a:['Одна','Две','Три','Четыре','Пять'],k:2},
+ {q:'Сколько цепей образует обычную молекулу ДНК?',a:['Одну','Три','Четыре','Пять','Две'],k:4},
+ {q:'Где находятся азотистые основания в двойной спирали ДНК?',a:['Внутри, между каркасами двух цепей','Снаружи молекулы, вместо фосфатов','Только на концах цепей','В ядре каждого атома','Отдельно от молекулы'],k:0}
+];
+const letters=['A','B','C','D','E'];
+by('quiz').innerHTML=data.map((q,i)=>`<div class="question"><strong>${i+1}. ${htmlescape(q.q)}</strong>${q.a.map((a,j)=>`<label class="option"><input type="radio" name="quiz${i}" value="${j}">${letters[j]}. ${htmlescape(a)}</label>`).join('')}</div>`).join('');
+function check(){let score=0,done=0;const mistakes=[];data.forEach((q,i)=>{const c=document.querySelector(`input[name="quiz${i}"]:checked`);if(c){done++;if(Number(c.value)===q.k)score++;else mistakes.push(i+1);}});if(done<5){by('quizResult').textContent=`Вы ответили на ${done} из 5 вопросов. Выберите ответ в каждом вопросе.`;return;}by('quizResult').textContent=`Результат: ${score} из 5 баллов.${score===5?' Отлично!':` Рекомендуется повторить вопросы ${mistakes.join(', ')}.`}`;}
+by('checkBtn').addEventListener('click',check);
+by('keysBtn').addEventListener('click',()=>{const e=by('quizKeys');e.hidden=!e.hidden;e.innerHTML=e.hidden?'':'<strong>Ответы к тесту:</strong><br>'+data.map((q,i)=>`${i+1}. ${letters[q.k]} — ${htmlescape(q.a[q.k])}`).join('<br>');by('keysBtn').textContent=e.hidden?'Показать правильные ответы':'Скрыть правильные ответы';});
+by('clearBtn').addEventListener('click',()=>{document.querySelectorAll('#quiz input').forEach(el=>el.checked=false);by('quizResult').textContent='Результат появится после проверки.';by('quizKeys').hidden=true;by('keysBtn').textContent='Показать правильные ответы';});
+
+ by('submitResultsBtn').addEventListener('click',async()=>{
+  const studentName=by('studentName').value.trim();
+  const studentClass=by('studentClass').value.trim();
+  const status=by('submitStatus');
+  if(!studentName||!studentClass){status.textContent='Укажите фамилию, имя и класс.';return;}
+  if(phase!=='helix'||count!==8){status.textContent='Сначала завершите сборку модели: соберите все 8 пар и скрутите двойную спираль.';return;}
+  const chosen=data.map((q,i)=>document.querySelector(`input[name="quiz${i}"]:checked`));
+  if(chosen.some(x=>!x)){status.textContent='Ответьте на все 5 тестовых вопросов, затем отправьте результаты.';return;}
+  const score=chosen.reduce((sum,c,i)=>sum+(Number(c.value)===data[i].k?1:0),0);
+  const answerSummary=chosen.map((c,i)=>`${i+1}:${letters[Number(c.value)]}`).join('; ');
+  // После публикации Google Apps Script вставьте сюда URL веб-приложения, заканчивающийся на /exec.
+  const GOOGLE_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwcWR7U2hn1AD-NQXzGWVb6o-P7XFJET4zb0Ekj3XOHmx7ANoMc6ZtENmOBvoe4E8jY5g/exec';
+  if(!GOOGLE_SCRIPT_URL.startsWith('https://script.google.com/macros/s/')){
+   status.textContent='Учитель ещё не подключил таблицу Google. Сообщите учителю.';return;
+  }
+  const payload=new URLSearchParams({
+   student_name:studentName,student_class:studentClass,
+   model_status:'Модель ДНК собрана; двойная спираль сформирована',
+   pairs_completed:`${count} из 8`,mistakes:String(errors),
+   quiz_score:`${score} из 5`,quiz_answers:answerSummary,
+   submitted_at:new Date().toLocaleString('ru-RU')
+  });
+  const btn=by('submitResultsBtn');btn.disabled=true;status.textContent='Отправляем результаты…';
+  try{
+   // no-cors нужен для отправки формы на Apps Script с другого домена.
+   await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',body:payload});
+   status.textContent=`Запрос на отправку принят браузером. Результат теста: ${score} из 5. Учитель проверит появление записи в таблице.`;
+   btn.textContent='Отправлено';
+  }catch(err){
+   status.textContent='Не удалось отправить работу. Проверьте подключение к интернету и попробуйте ещё раз.';
+   btn.disabled=false;
+  }
+ });
+
+reset();
+})();
+</script>
+</body>
+</html>
